@@ -24,9 +24,11 @@ public class ListingInput {
     @Size(max = 65535)
     private String description;
 
+    // Mirrors listings.listing_type ENUM('sell','exchange','both') exactly — anything
+    // outside the database's enum passes validation here and then fails on insert.
     @NotBlank
-    @Pattern(regexp = "sell|trade|giveaway",
-            message = "must be one of: sell, trade, giveaway")
+    @Pattern(regexp = "sell|exchange|both",
+            message = "must be one of: sell, exchange, both")
     private String listingType;
 
     @DecimalMin("0.00")
@@ -38,9 +40,10 @@ public class ListingInput {
             message = "must be one of: new, like_new, good, fair, poor")
     private String conditionGrade;
 
-    // Optional on create (defaults to 'available'); send it on update to change state
-    @Pattern(regexp = "available|pending|sold|removed",
-            message = "must be one of: available, pending, sold, removed")
+    // Optional on create (defaults to 'available'); send it on update to change state.
+    // Mirrors listings.status ENUM('available','pending','sold','exchanged').
+    @Pattern(regexp = "available|pending|sold|exchanged",
+            message = "must be one of: available, pending, sold, exchanged")
     private String status;
 
     @Size(max = 500)

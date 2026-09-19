@@ -14,4 +14,10 @@ public interface UsersRepository extends CrudRepository<Users, Integer> { // or 
 
     // switch to custom queries
     Optional<Users> findByUsername(String username); // or: Users findByUsername(String username);
+
+    boolean existsByUsername(String username);
+
+    boolean existsByEmail(String email);
+
+    boolean existsByEmailAndIdNot(String email, Integer id);
 }
